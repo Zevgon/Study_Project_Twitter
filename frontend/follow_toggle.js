@@ -1,8 +1,8 @@
 class FollowToggle {
-  constructor($object) {
+  constructor($object, options) {
     this.$object = $object;
-    this.$userId = $object.data().userId;
-    this.$followState = $object.data().initialFollowState;
+    this.$userId = $object.data().userId || options.userId;
+    this.$followState = $object.data().initialFollowState || options.followState;
     this.render();
     this.handleClick();
   }
@@ -27,6 +27,7 @@ class FollowToggle {
 
       if (followToggleObject.$followState === "unfollowed") {
         followToggleObject.$followState = "following";
+        followToggleObject.$object.prop("disabled", true);
         followToggleObject.render();
 
         $.ajax({
@@ -35,11 +36,13 @@ class FollowToggle {
           dataType: "json",
           success: function (){
             followToggleObject.$followState = "followed";
+            followToggleObject.$object.prop("disabled", false);
             followToggleObject.render();
           }
         });
       } else {
         followToggleObject.$followState = "unfollowing";
+        followToggleObject.$object.prop("disabled", true);
         followToggleObject.render();
 
         $.ajax({
@@ -48,6 +51,7 @@ class FollowToggle {
           dataType: "json",
           success: function () {
             followToggleObject.$followState = "unfollowed";
+            followToggleObject.$object.prop("disabled", false);
             followToggleObject.render();
           }
         });
