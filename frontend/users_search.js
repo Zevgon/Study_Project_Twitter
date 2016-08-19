@@ -27,13 +27,8 @@ class UsersSearch {
     this.$ul.children().remove();
     let that = this;
     response.forEach( user => {
-      // debugger;
       let foundUser = $(`<li>${user.username}</li>`);
       let followState = user.followed ? "followed" : "unfollowed";
-      // let button = $(`<button class = "follow-toggle"
-      // data-user-id = "${user.id}"
-      // data-initial-follow-state = ${followState}>
-      // </button>`);
       let button = $("<button></button>");
       let toggleButton = new FollowToggle(button, {userId: user.id, followState: followState});
       that.$ul.append(foundUser);
