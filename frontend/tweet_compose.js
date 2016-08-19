@@ -9,6 +9,10 @@ class TweetCompose {
     this.$textArea = $("#tweet-text-area");
     this.$mentioned = $("#mentioned-selected");
     this.$form.on("submit", this.composeTweet.bind(this));
+    this.$charsLeft = $(".chars-left");
+    this.$textArea.on("keyup", (event)=>{
+      this.displayCharsRemaining(event);
+    });
   }
 
   composeTweet(event){
@@ -28,8 +32,19 @@ class TweetCompose {
     $(":input").prop("disabled", true);
   }
 
-  render () {
-
+  displayCharsRemaining(event) {
+    let lengthOfInput = this.$textArea.val().length;
+    this.$charsLeft.text(`Characters remaining: ${140 - lengthOfInput}/140`);
+    // debugger;
+    // console.log(event);
+    // $.ajax({
+    //   method: "GET",
+    //   url: "",
+    //   data: {query: `${that.$input[0].value}`},
+    //   dataType: "json",
+    //   success: function (response) {
+    //     that.renderResults(response);
+    //   }
   }
 
   addTweet (tweet) {
